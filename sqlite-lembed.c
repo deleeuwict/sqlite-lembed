@@ -177,7 +177,7 @@ struct Api {
 
 void api_free(void *p) {
   struct Api *a = (struct Api *)p;
-  //GJ DISABLE llama_backend_free();
+  llama_backend_free();
   sqlite3_free(a);
 }
 
@@ -890,9 +890,9 @@ __declspec(dllexport)
                             const sqlite3_api_routines *pApi) {
   SQLITE_EXTENSION_INIT2(pApi);
 
-  //GJ DISABLE llama_backend_init();
-  //GJ DISABLE  llama_log_set(dummy_log, NULL);
-  LlamaFactoryInitializeOnce();
+  llama_backend_init();
+  llama_log_set(dummy_log, NULL);
+
   struct Api *a = sqlite3_malloc(sizeof(struct Api));
   assert(a);
   memset(a, 0, sizeof(*a));
